@@ -3,6 +3,9 @@ with ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 with Ada.Calendar; use Ada.Calendar;
 with ada.strings.unbounded; use ada.strings.unbounded;
 with ada.strings.unbounded.Text_IO; use ada.strings.unbounded.Text_IO;
+with Ada.Strings.Fixed; use Ada.Strings.Fixed;
+with Ada.Strings;              use Ada.Strings;
+with Ada.Characters.Handling;  use Ada.Characters.Handling;
 
 procedure spigot is
 
@@ -27,9 +30,6 @@ begin
     len := (10 * N/3) + 1;
     
     a := (1..3334 => 2);
-    for i in reverse 10..1 loop
-        put(i);
-    end loop;
 
     for j in 1..N loop
         q := 0;
@@ -44,29 +44,33 @@ begin
             nines := nines + 1;
         elsif(q = 10) then
             put(predigit+1);
-            pi := pi & Integer'Image(predigit + 1);
+            
+            pi := pi & Trim(Integer'Image(predigit + 1), Both);
+            -- pi := pi & (Trim (Source => Integer'Image(predigit + 1), Side => Both));
             for k in 0..nines-1 loop
                 put(0);
-                pi := pi & Integer'Image(0);
+                pi := pi & '0';
+                -- pi := pi & (Trim (Source => Integer'Image(0), Side => Both));
             end loop;
 
             predigit := 0;
             nines := 0;
         else
             put(predigit);
-            pi := pi & Integer'Image(predigit);
+            pi := pi & Trim(Integer'Image(predigit), Both);
+            -- pi := pi & Trim(Integer'Image(0), Both);
             predigit := q;
             if(nines /= 0) then
                 for k in 0..nines-1 loop
                     put(9);
-                    pi := pi & Integer'Image(9);
+                    pi := pi &'9';
                 end loop;
                 nines := 0;
             end if;
         end if;
     end loop;
     put(predigit);
-    pi := pi & Integer'Image(predigit);
+    pi := pi & Trim(Integer'Image(predigit), Both);
     Create(New_File, Out_File, filename);
     Put_Line(New_file, pi);
     Close(New_File);
