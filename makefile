@@ -11,4 +11,7 @@ quick:
 python:
 	python spigot.py
 
-
+fortran:
+	gfortran -Wall spigot.f95
+	./a.out
+	rm a.out

@@ -61,6 +61,8 @@ def get_file_info():
 
 
 def main():
+    a = 10
+    b = 3
     spigot()
 
 
