@@ -15,3 +15,10 @@ fortran:
 	gfortran -Wall spigot.f95
 	./a.out
 	rm a.out
+
+ada:
+	gnatmake spigot.adb
+	./spigot
+	rm spigot
+	rm spigot.ali
+	rm spigot.o
