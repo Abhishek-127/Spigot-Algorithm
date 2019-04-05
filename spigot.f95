@@ -24,10 +24,11 @@ end subroutine get_file_info
 subroutine spigot(i, j, k, q, x, len, N, nines, predigit)
     integer, intent(inout)  :: i, j, k, q, x, len, N, nines, predigit
     integer, dimension(0:len) :: a
-    character, dimension(1000) :: c
-    character (len = 1000) :: pi
+    character, dimension(1001) :: c
+    character (len = 1001) :: pi
     integer :: pi_c = 0
     a = 2
+    pi = ''
 
     do j = 1, N, 1
         q = 0
@@ -64,7 +65,7 @@ subroutine spigot(i, j, k, q, x, len, N, nines, predigit)
     end do
     print *, predigit
     call convert(pi_c, c, predigit)
-    do i = 1, 1000, 1
+    do i = 1, 1001, 1
         pi(i:i) = c(i)
     end do
     write(1, '(a)') pi
@@ -73,7 +74,7 @@ end subroutine spigot
 subroutine convert(pi_c, c, num_to_check)
     integer, intent(inout) :: pi_c
     character, dimension(0:1000), intent(inout) :: c
-    integer, intent(inout) :: num_to_check
+    integer, intent(in) :: num_to_check
 
     if(num_to_check == 0) c(pi_c) = '0'
     if(num_to_check == 1) c(pi_c) = '1'
