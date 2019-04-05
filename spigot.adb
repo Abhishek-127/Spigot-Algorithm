@@ -1,6 +1,8 @@
 with ada.Text_IO; use Ada.Text_IO;
 with ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 with Ada.Calendar; use Ada.Calendar;
+with ada.strings.unbounded; use ada.strings.unbounded;
+with ada.strings.unbounded.Text_IO; use ada.strings.unbounded.Text_IO;
 
 procedure spigot is
 
@@ -16,12 +18,14 @@ procedure spigot is
     len, nines, predigit : integer := 0;
     N : constant integer := 1000;
     a : array (1..3334) of integer;
+    New_File : File_Type;
+    pi : unbounded_string;
 begin
     put_line("Hello");
     get_filename(filename);
     put_line(filename);
     len := (10 * N/3) + 1;
-
+    
     a := (1..3334 => 2);
     for i in reverse 10..1 loop
         put(i);
@@ -40,22 +44,30 @@ begin
             nines := nines + 1;
         elsif(q = 10) then
             put(predigit+1);
+            pi := pi & Integer'Image(predigit + 1);
             for k in 0..nines-1 loop
                 put(0);
+                pi := pi & Integer'Image(0);
             end loop;
 
             predigit := 0;
             nines := 0;
         else
             put(predigit);
+            pi := pi & Integer'Image(predigit);
             predigit := q;
             if(nines /= 0) then
                 for k in 0..nines-1 loop
                     put(9);
+                    pi := pi & Integer'Image(9);
                 end loop;
                 nines := 0;
             end if;
         end if;
     end loop;
     put(predigit);
+    pi := pi & Integer'Image(predigit);
+    Create(New_File, Out_File, filename);
+    Put_Line(New_file, pi);
+    Close(New_File);
 end spigot;
