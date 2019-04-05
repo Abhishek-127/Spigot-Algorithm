@@ -21,7 +21,7 @@ void spigot() {
       a[i] = 2;
 
    // Repeat n times
-   for (j=1; j<=1000; j=j+1) {
+   for (j=1; j<=N; j=j+1) {
       q = 0;
       for (i=len; i>0; i=i-1) {
          x = 10 * a[i-1] + q*i;
