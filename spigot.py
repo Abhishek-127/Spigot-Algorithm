@@ -5,7 +5,7 @@ def spigot():
     length = 0
     nines = 0
     predigit = 0
-    N = 1002
+    N = 1000
     pi = ''
 
     length = (10 * N/3) + 1
