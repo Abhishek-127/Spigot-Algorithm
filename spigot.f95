@@ -1,4 +1,5 @@
-
+! @author Abhishek Jhoree
+!
 program main
     implicit none
     integer :: i, j, k, q, x = 0
@@ -12,7 +13,7 @@ program main
     len = (10 * N/3) + 1
 
     call get_file_info(filename)
-    open(1, file = filename, status = 'new')
+    open(1, file = filename, status = 'replace')
 
     call cpu_time(start)
     call spigot(i, j, k, q, x, len, N, nines, predigit)

@@ -49,7 +49,7 @@ def spigot():
     pi += "\n"
     print(pi)
     stop_time = time.time()
-    print("Time taken by the algorithm is: ", str(stop_time - start_time))
+    print("Time taken by the algorithm is: ", str(stop_time - start_time), " Seconds")
     f.write(pi)
     f.close()
 
