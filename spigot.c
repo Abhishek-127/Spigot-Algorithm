@@ -1,12 +1,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
+/**
+ * Function that performs the main functionality of the algorithm
+ * writes the final output to the file
+ * @param void
+ * @return void
+ **/
 void spigot_algorithm();
+
+/**
+ * Helper funtion that helps to get the file information from the user
+ * @param filename[char *] a pointer to the filename string. The input from the user will
+ *  be assigned to this variable and will be used to open the file
+ * @return void
+ **/
 void get_file_info(char* filename);
 
+/**
+ * Main function of the program
+ * Makes a call to the spigot algorithm that perorms the required calculations
+ * @param void
+ * @return 0
+ **/
 int main(void){
+
     spigot_algorithm();
+    
     return 0;
 }
 
@@ -15,6 +37,11 @@ void spigot_algorithm(){
     filename = calloc(250, sizeof(char));
 
     get_file_info(filename);
+    // start the clock here
+    clock_t start, end;
+    double time_taken;
+
+    start = clock();
     FILE *fptr = NULL;
     fptr = fopen(filename, "w+");
     if (fptr == NULL){
@@ -27,7 +54,7 @@ void spigot_algorithm(){
     i = j = k = q = x = 0;
     int len;
     int nines = 0, predigit = 0;
-    int N = 1000;
+    int N = 1002;
 
     len = (10 * N/3) + 1;
     int a[len];
@@ -75,12 +102,17 @@ void spigot_algorithm(){
         }
     }
     printf("%d\n", predigit);
-    c = predigit + '0';
-    fputc(c, fptr);
+    // c = predigit + '0';
+    // fputc(c, fptr);
     c = '\n' + 0;
     fputc(c, fptr);
     fclose(fptr);
 
+    
+    end = clock();
+    time_taken = ((double)end-start)/CLOCKS_PER_SEC;
+    printf("\nspigot() took %f seconds to execute \n", time_taken); 
+    printf("The output filename is: %s\n", filename);
     free(filename);
     return;
 }

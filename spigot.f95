@@ -5,6 +5,7 @@ program main
     integer :: len, nines, predigit = 0
     character (len = 200) :: filename
     integer :: N = 1000
+    real :: start, finish
     
     nines = 0
     predigit = 0
@@ -12,7 +13,11 @@ program main
 
     call get_file_info(filename)
     open(1, file = filename, status = 'new')
+
+    call cpu_time(start)
     call spigot(i, j, k, q, x, len, N, nines, predigit)
+    call cpu_time(finish)
+    print '("Execution Time = ",f6.3," seconds.")',finish-start
 end program main
 
 subroutine get_file_info(filename)
@@ -42,32 +47,28 @@ subroutine spigot(i, j, k, q, x, len, N, nines, predigit)
         if(q == 9)  then
             nines = nines + 1
         else if(q == 10) then
-            print *, char(predigit + 1)
             call convert(pi_c, c, (predigit + 1) )
             do k = 0, nines-1, 1
-                print *, 0
                 call convert(pi_c, c, 0)
             end do
             predigit = 0
             nines = 0
         else
-            print *, predigit
             call convert(pi_c, c, predigit)
             predigit = q
             if(nines /= 0) then
                 do k = 0, nines-1, 1
-                    print *, 9
                     call convert(pi_c, c, 9)
                 end do
                 nines = 0
             end if
         end if
     end do
-    print *, predigit
     call convert(pi_c, c, predigit)
     do i = 1, 1001, 1
         pi(i:i) = c(i)
     end do
+    print *, '\n', pi
     write(1, '(a)') pi
 end subroutine spigot
 

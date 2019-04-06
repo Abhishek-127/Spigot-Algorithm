@@ -1,6 +1,10 @@
+import  time
 
 def spigot():
     filename = get_file_info()
+
+    # start the timer here
+    start_time = time.time()
     f = open(filename, 'w')
     length = 0
     nines = 0
@@ -27,27 +31,25 @@ def spigot():
         if(q == 9):
             nines = nines + 1
         elif(q == 10):
-            print(predigit+1)
             pi += str(predigit + 1)
             for k in range(0, nines):
-                print(0)
                 pi += '0'
             predigit = 0
             nines = 0
         else:
-            print(predigit)
             pi += str(predigit)
             predigit  = q
             if (nines != 0):
                 for k in range(0, nines):
-                    print(9)
                     pi += '9'
                 nines = 0
             
         
-    print(predigit)
     pi += str(predigit)
     pi += "\n"
+    print(pi)
+    stop_time = time.time()
+    print("Time taken by the algorithm is: ", str(stop_time - start_time))
     f.write(pi)
     f.close()
 

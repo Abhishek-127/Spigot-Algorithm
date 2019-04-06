@@ -4,8 +4,9 @@ with Ada.Calendar; use Ada.Calendar;
 with ada.strings.unbounded; use ada.strings.unbounded;
 with ada.strings.unbounded.Text_IO; use ada.strings.unbounded.Text_IO;
 with Ada.Strings.Fixed; use Ada.Strings.Fixed;
-with Ada.Strings;              use Ada.Strings;
+with Ada.Strings; use Ada.Strings;
 with Ada.Characters.Handling;  use Ada.Characters.Handling;
+with Ada.Calendar; use Ada.Calendar;
 
 procedure spigot is
 
@@ -23,6 +24,8 @@ procedure spigot is
     a : array (1..3334) of integer;
     New_File : File_Type;
     pi : unbounded_string;
+    startTime, endTime : Time;
+    milliS : Duration;
 begin
     put_line("Hello");
     get_filename(filename);
@@ -30,6 +33,7 @@ begin
     len := (10 * N/3) + 1;
     
     a := (1..3334 => 2);
+    startTime := Clock;
 
     for j in 1..N loop
         q := 0;
@@ -43,34 +47,32 @@ begin
         if(q = 9) then
             nines := nines + 1;
         elsif(q = 10) then
-            put(predigit+1);
-            
             pi := pi & Trim(Integer'Image(predigit + 1), Both);
-            -- pi := pi & (Trim (Source => Integer'Image(predigit + 1), Side => Both));
             for k in 0..nines-1 loop
-                put(0);
                 pi := pi & '0';
-                -- pi := pi & (Trim (Source => Integer'Image(0), Side => Both));
             end loop;
 
             predigit := 0;
             nines := 0;
         else
-            put(predigit);
             pi := pi & Trim(Integer'Image(predigit), Both);
-            -- pi := pi & Trim(Integer'Image(0), Both);
             predigit := q;
             if(nines /= 0) then
                 for k in 0..nines-1 loop
-                    put(9);
                     pi := pi &'9';
                 end loop;
                 nines := 0;
             end if;
         end if;
     end loop;
-    put(predigit);
+
+    endTime := Clock;
+    milliS := (endTime - startTime) * 1000;
+
     pi := pi & Trim(Integer'Image(predigit), Both);
+    new_line;
+    put_line("Runtime = " & Duration'Image(milliS) & " milliseconds.");
+
     Create(New_File, Out_File, filename);
     Put_Line(New_file, pi);
     Close(New_File);
