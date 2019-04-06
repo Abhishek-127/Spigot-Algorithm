@@ -80,6 +80,8 @@ begin
 
     pi := pi & Trim(Integer'Image(predigit), Both);
     new_line;
+    put_line(pi);
+    new_line;
     put_line("Runtime = " & Duration'Image(milliS) & " milliseconds.");
 
     Create(New_File, Out_File, filename);
